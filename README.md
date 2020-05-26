@@ -1,0 +1,2 @@
+# cg50-study
+Exercises from CS50's Introduction to Game Development. Course from Harvard University. Available at freeCodeCamp.org. (source: https://www.youtube.com/watch?v=jZqYXSmgDuM&amp;list=PLWKjhJtqVAbluXJKKbCIb4xd7fcRkpzoz)
