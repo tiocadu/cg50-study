@@ -1,6 +1,10 @@
 -- gd50 from Harvard University
 -- author: @tiocadu
 
+-- instead of using a package manager, i'm going with local dependence
+-- https://github.com/Ulydev/push
+push = require 'push/push'
+
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
 
