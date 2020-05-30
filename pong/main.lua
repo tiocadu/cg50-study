@@ -8,6 +8,8 @@ push = require 'libs/push'
 -- https://github.com/vrld/hump/blob/master/class.lua
 Class = require 'libs/class'
 
+require 'Ball'
+
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
 
@@ -43,12 +45,7 @@ function love.load()
     player2Y = VIRTUAL_HEIGHT - 50
 
     -- initial ball position
-    ballX = VIRTUAL_WIDTH/2 - 2
-    ballY = VIRTUAL_HEIGHT/2 - 2
-
-    -- ball velocity
-    ballDX = math.random(2) == 1 and 100 or -100
-    ballDY = math.random(-50, 50)
+    ball = Ball(VIRTUAL_WIDTH/2 - 2, VIRTUAL_HEIGHT/2 - 2, 4, 4)
 
     -- game state
     gameState = 'start'
@@ -65,8 +62,7 @@ function love.keypressed(key)
             gameState = 'start'
 
              -- initial ball position
-            ballX = VIRTUAL_WIDTH/2 - 2
-            ballY = VIRTUAL_HEIGHT/2 - 2
+            ball:reset()
 
             -- ball velocity
             ballDX = math.random(2) == 1 and 100 or -100
@@ -93,8 +89,7 @@ function love.update(dt)
 
     -- ball movement
     if gameState == 'play' then
-        ballX = ballX + ballDX * dt
-        ballY = ballY + ballDY * dt
+        ball:update(dt)
     end
 
 end
@@ -119,7 +114,7 @@ function love.draw()
     love.graphics.rectangle('fill', VIRTUAL_WIDTH -10, player2Y, 5, 20)
 
     -- display ball
-    love.graphics.rectangle('fill', ballX, ballY, 4, 4)
+    ball:render()
 
     push:apply('end')
 end
