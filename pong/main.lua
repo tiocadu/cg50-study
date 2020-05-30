@@ -1,9 +1,12 @@
 -- gd50 from Harvard University
 -- author: @tiocadu
 
--- instead of using a package manager, i'm going with local dependence
--- https://github.com/Ulydev/push
-push = require 'push/push'
+-- instead of using a package manager, i'm going with local dependences
+-- https://github.com/Ulydev/push/blob/master/push.lua
+push = require 'libs/push'
+
+-- https://github.com/vrld/hump/blob/master/class.lua
+Class = require 'libs/class'
 
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
