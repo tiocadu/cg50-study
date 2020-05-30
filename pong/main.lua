@@ -66,13 +66,20 @@ function love.draw()
     -- setting bakcground color to gray
     love.graphics.clear(40/255, 45/255, 52/255, 255/255)
 
+    -- display game name
+    love.graphics.setFont(smallFont)
     love.graphics.printf('Hello Pong!', 0, 20, VIRTUAL_WIDTH, 'center')
 
-    -- paddles
+    -- display score
+    love.graphics.setFont(scoreFont)
+    love.graphics.print(player1Score, VIRTUAL_WIDTH/2 - 50, VIRTUAL_HEIGHT/3)
+    love.graphics.print(player2Score, VIRTUAL_WIDTH/2 + 30, VIRTUAL_HEIGHT/3)
+
+    -- display paddles - right and left
     love.graphics.rectangle('fill', 10, player1Y, 5, 20)
     love.graphics.rectangle('fill', VIRTUAL_WIDTH -10, player2Y, 5, 20)
 
-    -- ball
+    -- display ball
     love.graphics.rectangle('fill', VIRTUAL_WIDTH/2 - 2, VIRTUAL_HEIGHT/2 - 2, 4, 4)
 
     push:apply('end')
