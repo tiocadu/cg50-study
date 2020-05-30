@@ -20,6 +20,9 @@ VIRTUAL_HEIGHT = 243
 
 PADDLE_SPEED = 200
 
+COLLISION_CHECK_P1 = false
+COLLISION_CHECK_P2 = false
+
 function love.load()
     love.window.setTitle('Hello Pong!')
     love.graphics.setDefaultFilter('nearest', 'nearest')
@@ -42,10 +45,7 @@ function love.load()
     player1Score = 0
     player2Score = 0
 
-    -- paddle positions on Y axis
-    player1Y = 30
-    player2Y = VIRTUAL_HEIGHT - 50
-
+    -- initial Paddles
     player1 = Paddle(10, 30, 5, 20)
     player2 = Paddle(VIRTUAL_WIDTH - 10, VIRTUAL_HEIGHT - 50, 5, 20)
 
@@ -91,8 +91,45 @@ function love.update(dt)
         player2.dy = 0
     end
 
+    -- collision detection
+    COLLISION_CHECK_P1 = ball:collides(player1) and true or false
+    COLLISION_CHECK_P2 = ball:collides(player2) and true or false
+
     -- ball movement
     if gameState == 'play' then
+        if ball:collides(player1) then
+            ball.dx = -ball.dx * 1.03
+            ball.x = player1.x + 5
+
+            if ball.dy < 0 then
+                ball.dy = -math.random(10, 150)
+            else
+                ball.dy = math.random(10, 150)
+            end
+        end
+
+        if ball:collides(player2) then
+            ball.dx = -ball.dx * 1.03
+            ball.x = player2.x - 4
+
+            if ball.dy < 0 then
+                ball.dy = -math.random(10, 150)
+            else
+                ball.dy = math.random(10, 150)
+            end
+        end
+
+        -- detect upper and lower boundaries
+        if ball.y <= 0 then
+            ball.y = 0
+            ball.dy = -ball.dy
+        end
+
+        if ball.y >= VIRTUAL_HEIGHT - 4 then
+            ball.y = VIRTUAL_HEIGHT - 4
+            ball.dy = -ball.dy
+        end
+
         ball:update(dt)
     end
 
@@ -133,4 +170,6 @@ function displayFPS()
     love.graphics.setFont(smallFont)
     love.graphics.setColor(0, 255, 0, 255)
     love.graphics.print('FPS: ' .. tostring(love.timer.getFPS()), 10, 10)
+    love.graphics.print('Collision P1: ' .. tostring(COLLISION_CHECK_P1), 10, 20)
+    love.graphics.print('Collision P2: ' .. tostring(COLLISION_CHECK_P2), 10, 30)
 end
