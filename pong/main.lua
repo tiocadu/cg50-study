@@ -10,6 +10,7 @@ Class = require 'libs/class'
 
 require 'Paddle'
 require 'Ball'
+require 'Score'
 
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
@@ -42,8 +43,8 @@ function love.load()
     })
 
     -- initial score values
-    player1Score = 0
-    player2Score = 0
+    player1Score = Score(VIRTUAL_WIDTH/2 - 50, VIRTUAL_HEIGHT/3)
+    player2Score = Score(VIRTUAL_WIDTH/2 + 30, VIRTUAL_HEIGHT/3)
 
     -- initial Paddles
     player1 = Paddle(10, 30, 5, 20)
@@ -130,6 +131,17 @@ function love.update(dt)
             ball.dy = -ball.dy
         end
 
+        -- update score state
+        if ball.x <= 0 then
+            player2Score:update()
+            ball:reset()
+        end
+
+        if ball.x >= VIRTUAL_WIDTH - 4 then
+            player1Score:update()
+            ball:reset()
+        end
+
         ball:update(dt)
     end
 
@@ -149,9 +161,8 @@ function love.draw()
     love.graphics.printf('Hello Pong! ' .. gameState .. ' State', 0, 20, VIRTUAL_WIDTH, 'center')
 
     -- display score
-    love.graphics.setFont(scoreFont)
-    love.graphics.print(player1Score, VIRTUAL_WIDTH/2 - 50, VIRTUAL_HEIGHT/3)
-    love.graphics.print(player2Score, VIRTUAL_WIDTH/2 + 30, VIRTUAL_HEIGHT/3)
+    player1Score:render()
+    player2Score:render()
 
     -- display paddles - right and left
     player1:render()
