@@ -21,6 +21,7 @@ VIRTUAL_HEIGHT = 243
 PADDLE_SPEED = 200
 
 function love.load()
+    love.window.setTitle('Hello Pong!')
     love.graphics.setDefaultFilter('nearest', 'nearest')
 
     -- setting RNG for the game
@@ -65,12 +66,8 @@ function love.keypressed(key)
         else
             gameState = 'start'
 
-             -- initial ball position
+             -- initial ball position and velocity
             ball:reset()
-
-            -- ball velocity
-            ballDX = math.random(2) == 1 and 100 or -100
-            ballDY = math.random(-50, 50)
         end
     end
 end
@@ -126,5 +123,14 @@ function love.draw()
     -- display ball
     ball:render()
 
+    -- debug
+    displayFPS()
+
     push:apply('end')
+end
+
+function displayFPS()
+    love.graphics.setFont(smallFont)
+    love.graphics.setColor(0, 255, 0, 255)
+    love.graphics.print('FPS: ' .. tostring(love.timer.getFPS()), 10, 10)
 end
