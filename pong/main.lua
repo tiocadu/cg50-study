@@ -8,6 +8,7 @@ push = require 'libs/push'
 -- https://github.com/vrld/hump/blob/master/class.lua
 Class = require 'libs/class'
 
+require 'Paddle'
 require 'Ball'
 
 WINDOW_WIDTH = 1280
@@ -44,6 +45,9 @@ function love.load()
     player1Y = 30
     player2Y = VIRTUAL_HEIGHT - 50
 
+    player1 = Paddle(10, 30, 5, 20)
+    player2 = Paddle(VIRTUAL_WIDTH - 10, VIRTUAL_HEIGHT - 50, 5, 20)
+
     -- initial ball position
     ball = Ball(VIRTUAL_WIDTH/2 - 2, VIRTUAL_HEIGHT/2 - 2, 4, 4)
 
@@ -72,19 +76,22 @@ function love.keypressed(key)
 end
 
 function love.update(dt)
-
     -- player1 controls
     if love.keyboard.isDown('w') then
-        player1Y = math.max(0, player1Y - PADDLE_SPEED * dt)
+        player1.dy = - PADDLE_SPEED
     elseif love.keyboard.isDown('s') then
-        player1Y = math.min(VIRTUAL_HEIGHT - 20, player1Y + PADDLE_SPEED * dt)
+        player1.dy = PADDLE_SPEED
+    else
+        player1.dy = 0
     end
 
     -- player2 controls
     if love.keyboard.isDown('up') then
-        player2Y = math.max(0, player2Y - PADDLE_SPEED * dt)
+        player2.dy = - PADDLE_SPEED
     elseif love.keyboard.isDown('down') then
-        player2Y = math.min(VIRTUAL_HEIGHT - 20, player2Y + PADDLE_SPEED * dt)
+        player2.dy = PADDLE_SPEED
+    else
+        player2.dy = 0
     end
 
     -- ball movement
@@ -92,6 +99,9 @@ function love.update(dt)
         ball:update(dt)
     end
 
+    -- update paddles
+    player1:update(dt)
+    player2:update(dt)
 end
 
 function love.draw()
@@ -110,8 +120,8 @@ function love.draw()
     love.graphics.print(player2Score, VIRTUAL_WIDTH/2 + 30, VIRTUAL_HEIGHT/3)
 
     -- display paddles - right and left
-    love.graphics.rectangle('fill', 10, player1Y, 5, 20)
-    love.graphics.rectangle('fill', VIRTUAL_WIDTH -10, player2Y, 5, 20)
+    player1:render()
+    player2:render()
 
     -- display ball
     ball:render()
