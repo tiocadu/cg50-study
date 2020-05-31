@@ -19,8 +19,6 @@ WINDOW_HEIGHT = 720
 VIRTUAL_WIDTH = 432
 VIRTUAL_HEIGHT = 243
 
-PADDLE_SPEED = 200
-
 function love.load()
     love.window.setTitle('Hello Pong!')
     love.graphics.setDefaultFilter('nearest', 'nearest')
@@ -69,20 +67,20 @@ end
 function love.update(dt)
     -- player1 controls
     if love.keyboard.isDown('w') then
-        player1.dy = - PADDLE_SPEED
+        player1:moveUp()
     elseif love.keyboard.isDown('s') then
-        player1.dy = PADDLE_SPEED
+        player1:moveDown()
     else
-        player1.dy = 0
+        player1:stop()
     end
 
     -- player2 controls
     if love.keyboard.isDown('up') then
-        player2.dy = - PADDLE_SPEED
+        player2:moveUp()
     elseif love.keyboard.isDown('down') then
-        player2.dy = PADDLE_SPEED
+        player2:moveDown()
     else
-        player2.dy = 0
+        player2:stop()
     end
 
     -- ball movement
