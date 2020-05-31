@@ -153,6 +153,11 @@ function love.draw()
     -- setting bakcground color to gray
     love.graphics.clear(40/255, 45/255, 52/255, 255/255)
 
+    -- drawing central line
+    for i = 0, VIRTUAL_HEIGHT, 8 do
+        love.graphics.line(VIRTUAL_WIDTH/2, i, VIRTUAL_WIDTH/2, i + 4)
+    end
+
     -- display game name
     love.graphics.setFont(smallFont)
     love.graphics.printf('Hello Pong! ' .. gameState .. ' State', 0, 20, VIRTUAL_WIDTH, 'center')
