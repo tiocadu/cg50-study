@@ -31,16 +31,30 @@ function Game:reset()
     self.servingPlayer = math.random(2)
 end
 
-function Game:update(state)
-    self.state = state
+function Game:updateState()
+    if self.state == GAME_STATE.START then
+        self.state = GAME_STATE.SERVE
+    elseif self.state == GAME_STATE.SERVE then
+        self.state = GAME_STATE.PLAY
+    elseif self.state == GAME_STATE.PLAY then
+        self.state = GAME_STATE.PAUSE
+    elseif self.state == GAME_STATE.PAUSE then
+        self.state = GAME_STATE.PLAY
+    elseif self.state == GAME_STATE.END then
+        self:reset()
+    end
 end
 
 function Game:updatePlayer1Score()
     self.player1Score:update()
+    self.servingPlayer = 2
+    self.state = GAME_STATE.SERVE
 end
 
 function Game:updatePlayer2Score()
     self.player2Score:update()
+    self.servingPlayer = 1
+    self.state = GAME_STATE.SERVE
 end
 
 function Game:checkWinner()
@@ -53,8 +67,10 @@ end
 function Game:setWinner()
     if self.player1Score.value == WIN_SCORE then
         self.winner = 1
+        self.state = GAME_STATE.END
     elseif self.player2Score.value == WIN_SCORE then
         self.winner = 2
+        self.state = GAME_STATE.END
     else
         self.winner = nil
     end
@@ -72,10 +88,10 @@ function Game:render()
     elseif self.state == GAME_STATE.PAUSE then
         love.graphics.printf('Game Paused!', 0, 16, VIRTUAL_WIDTH, 'center')
     elseif self.state == GAME_STATE.END then
-        love.graphics.printf('Player ' .. self.winner .. ' wins! Congratulations!', 0, 16, VIRTUAL_WIDTH, 'center')
+        love.graphics.setFont(mediumFont)
+        love.graphics.printf('Player ' .. self.winner .. ' wins!', 0, 10, VIRTUAL_WIDTH, 'center')
+        love.graphics.setFont(smallFont)
         love.graphics.printf('Press Enter to start new game!', 0, 26, VIRTUAL_WIDTH, 'center')
-    else
-        love.graphics.printf('Hello Pong! ' .. self.state .. ' State', 0, 16, VIRTUAL_WIDTH, 'center')
     end
 
     -- display score

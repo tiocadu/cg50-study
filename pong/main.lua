@@ -19,6 +19,8 @@ WINDOW_HEIGHT = 720
 VIRTUAL_WIDTH = 432
 VIRTUAL_HEIGHT = 243
 
+BALL_ACCELERATION = 1.1
+
 function love.load()
     love.window.setTitle('Hello Pong!')
     love.graphics.setDefaultFilter('nearest', 'nearest')
@@ -27,6 +29,7 @@ function love.load()
     math.randomseed(os.time())
 
     smallFont = love.graphics.newFont('assets/font.ttf', 8)
+    mediumFont = love.graphics.newFont('assets/font.ttf', 16)
 
     love.graphics.setFont(smallFont)
 
@@ -52,19 +55,7 @@ function love.keypressed(key)
     if key == 'escape' then
         love.event.quit()
     elseif key == 'enter' or key == 'return' then
-        if game.state == GAME_STATE.START then
-            game.state = GAME_STATE.SERVE
-        elseif game.state == GAME_STATE.SERVE then
-            game.state = GAME_STATE.PLAY
-        elseif game.state == GAME_STATE.PLAY then
-            game.state = GAME_STATE.PAUSE
-        elseif game.state == GAME_STATE.PAUSE then
-            game.state = GAME_STATE.PLAY
-        else
-            game:reset()
-             -- initial ball position and velocity
-            ball:reset()
-        end
+        game:updateState()
     end
 end
 
@@ -98,7 +89,7 @@ function love.update(dt)
         end
     elseif game.state == GAME_STATE.PLAY then
         if ball:collides(player1) then
-            ball.dx = -ball.dx * 1.03
+            ball.dx = -ball.dx * BALL_ACCELERATION
             ball.x = player1.x + 5
 
             if ball.dy < 0 then
@@ -109,7 +100,7 @@ function love.update(dt)
         end
 
         if ball:collides(player2) then
-            ball.dx = -ball.dx * 1.03
+            ball.dx = -ball.dx * BALL_ACCELERATION
             ball.x = player2.x - 4
 
             if ball.dy < 0 then
@@ -133,22 +124,16 @@ function love.update(dt)
         -- update score state
         if ball.x <= 0 then
             game:updatePlayer2Score()
-            game.servingPlayer = 1
-            game:update(GAME_STATE.SERVE)
         end
 
         if ball.x >= VIRTUAL_WIDTH - 4 then
             game:updatePlayer1Score()
-            game.servingPlayer = 2
-            game:update(GAME_STATE.SERVE)
         end
 
         ball:update(dt)
 
         if game:checkWinner() then
             game:setWinner()
-            game:update(GAME_STATE.END)
-            -- ball:reset()
         end
     end
 
