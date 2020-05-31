@@ -176,4 +176,5 @@ function displayFPS()
     love.graphics.setColor(0, 255, 0, 255)
     love.graphics.print('FPS: ' .. tostring(love.timer.getFPS()), 10, 10)
     love.graphics.print('ball x: ' .. tostring(math.floor(ball.x)), 10, 20)
+    love.graphics.print('ball dx: ' .. tostring(math.floor(ball.dx)), 10, 30)
 end
