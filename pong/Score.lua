@@ -4,6 +4,8 @@ function Score:init(x, y)
     self.x = x
     self.y = y
     self.value = 0
+
+    self.scoreFont = love.graphics.newFont('assets/font.ttf', 32)
 end
 
 function Score:reset()
@@ -15,6 +17,6 @@ function Score:update()
 end
 
 function Score:render()
-    love.graphics.setFont(scoreFont)
+    love.graphics.setFont(self.scoreFont)
     love.graphics.print(self.value, self.x, self.y)
 end
