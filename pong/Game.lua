@@ -9,6 +9,8 @@ GAME_STATE = {
     END = 'end'
 }
 
+WIN_SCORE = 1
+
 function Game:init()
     self.state = GAME_STATE.START
 
@@ -25,6 +27,21 @@ end
 
 function Game:update(state)
     self.state = state
+end
+
+function Game:updatePlayer1Score()
+    player1Score:update()
+end
+
+function Game:updatePlayer2Score()
+    player2Score:update()
+end
+
+function Game:checkWinner()
+    if player1Score.value == WIN_SCORE or player2Score.value == WIN_SCORE then
+        return true
+    end
+    return false
 end
 
 function Game:render()
