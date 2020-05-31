@@ -21,9 +21,6 @@ VIRTUAL_HEIGHT = 243
 
 PADDLE_SPEED = 200
 
-COLLISION_CHECK_P1 = false
-COLLISION_CHECK_P2 = false
-
 function love.load()
     love.window.setTitle('Hello Pong!')
     love.graphics.setDefaultFilter('nearest', 'nearest')
@@ -181,6 +178,4 @@ function displayFPS()
     love.graphics.setFont(smallFont)
     love.graphics.setColor(0, 255, 0, 255)
     love.graphics.print('FPS: ' .. tostring(love.timer.getFPS()), 10, 10)
-    love.graphics.print('Collision P1: ' .. tostring(COLLISION_CHECK_P1), 10, 20)
-    love.graphics.print('Collision P2: ' .. tostring(COLLISION_CHECK_P2), 10, 30)
 end
