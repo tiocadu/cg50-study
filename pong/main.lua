@@ -10,7 +10,7 @@ Class = require 'libs/class'
 
 require 'Paddle'
 require 'Ball'
-require 'Score'
+require 'Game'
 
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
@@ -29,7 +29,6 @@ function love.load()
     math.randomseed(os.time())
 
     smallFont = love.graphics.newFont('assets/font.ttf', 8)
-    scoreFont = love.graphics.newFont('assets/font.ttf', 32)
 
     love.graphics.setFont(smallFont)
 
@@ -39,19 +38,17 @@ function love.load()
         vsync = true
     })
 
-    -- initial score values
-    player1Score = Score(VIRTUAL_WIDTH/2 - 50, VIRTUAL_HEIGHT/3)
-    player2Score = Score(VIRTUAL_WIDTH/2 + 30, VIRTUAL_HEIGHT/3)
+    servingPlayer = math.random(2)
 
     -- initial Paddles
     player1 = Paddle(10, 30, 5, 20)
-    player2 = Paddle(VIRTUAL_WIDTH - 10, VIRTUAL_HEIGHT - 50, 5, 20)
+    player2 = Paddle(VIRTUAL_WIDTH - 15, VIRTUAL_HEIGHT - 50, 5, 20)
 
     -- initial ball position
     ball = Ball(VIRTUAL_WIDTH/2 - 2, VIRTUAL_HEIGHT/2 - 2, 4, 4)
 
     -- game state
-    gameState = 'start'
+    game = Game()
 end
 
 -- input controll
@@ -59,11 +56,10 @@ function love.keypressed(key)
     if key == 'escape' then
         love.event.quit()
     elseif key == 'enter' or key == 'return' then
-        if gameState == 'start' then
-            gameState = 'play'
+        if game.state == GAME_STATE.START then
+            game.state = GAME_STATE.PLAY
         else
-            gameState = 'start'
-
+            game:reset()
              -- initial ball position and velocity
             ball:reset()
         end
@@ -89,12 +85,8 @@ function love.update(dt)
         player2.dy = 0
     end
 
-    -- collision detection
-    COLLISION_CHECK_P1 = ball:collides(player1) and true or false
-    COLLISION_CHECK_P2 = ball:collides(player2) and true or false
-
     -- ball movement
-    if gameState == 'play' then
+    if game.state == GAME_STATE.PLAY then
         if ball:collides(player1) then
             ball.dx = -ball.dx * 1.03
             ball.x = player1.x + 5
@@ -130,16 +122,21 @@ function love.update(dt)
 
         -- update score state
         if ball.x <= 0 then
-            player2Score:update()
+            game:updatePlayer2Score()
             ball:reset()
         end
 
         if ball.x >= VIRTUAL_WIDTH - 4 then
-            player1Score:update()
+            game:updatePlayer1Score()
             ball:reset()
         end
 
         ball:update(dt)
+
+        if game:checkWinner() then
+            game.state = GAME_STATE.END
+            ball:reset()
+        end
     end
 
     -- update paddles
@@ -152,19 +149,10 @@ function love.draw()
 
     -- setting bakcground color to gray
     love.graphics.clear(40/255, 45/255, 52/255, 255/255)
-
-    -- drawing central line
-    for i = 0, VIRTUAL_HEIGHT, 8 do
-        love.graphics.line(VIRTUAL_WIDTH/2, i, VIRTUAL_WIDTH/2, i + 4)
-    end
+    -- displayCentralLine()
 
     -- display game name
-    love.graphics.setFont(smallFont)
-    love.graphics.printf('Hello Pong! ' .. gameState .. ' State', 0, 20, VIRTUAL_WIDTH, 'center')
-
-    -- display score
-    player1Score:render()
-    player2Score:render()
+    game:render()
 
     -- display paddles - right and left
     player1:render()
@@ -179,8 +167,15 @@ function love.draw()
     push:apply('end')
 end
 
+function displayCentralLine()
+    for i = 0, VIRTUAL_HEIGHT, 16 do
+        love.graphics.line(VIRTUAL_WIDTH/2, i, VIRTUAL_WIDTH/2, i + 4)
+    end
+end
+
 function displayFPS()
     love.graphics.setFont(smallFont)
     love.graphics.setColor(0, 255, 0, 255)
     love.graphics.print('FPS: ' .. tostring(love.timer.getFPS()), 10, 10)
+    love.graphics.print('help: ' .. tostring(GAME_STATE), 10, 20)
 end
