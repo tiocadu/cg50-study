@@ -10,7 +10,7 @@ GAME_STATE = {
     END = 'end'
 }
 
-WIN_SCORE = 2
+WIN_SCORE = 5
 
 function Game:init()
     self.state = GAME_STATE.START

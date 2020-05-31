@@ -8,3 +8,4 @@ Exercises from CS50's Introduction to Game Development. Course from Harvard Univ
 * Lua: https://www.lua.org/
 * Love2d: https://love2d.org/
 * LuaRocks: https://luarocks.org/
+* bfxr: https://www.bfxr.net/

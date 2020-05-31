@@ -21,6 +21,12 @@ VIRTUAL_HEIGHT = 243
 
 BALL_ACCELERATION = 1.1
 
+sounds = {
+    ['paddle_hit'] = love.audio.newSource('sounds/paddle_hit.wav', 'static'),
+    ['score'] = love.audio.newSource('sounds/score.wav', 'static'),
+    ['wall_hit'] = love.audio.newSource('sounds/wall_hit.wav', 'static')
+}
+
 function love.load()
     love.window.setTitle('Hello Pong!')
     love.graphics.setDefaultFilter('nearest', 'nearest')
@@ -97,6 +103,8 @@ function love.update(dt)
             else
                 ball.dy = math.random(10, 150)
             end
+
+            sounds['paddle_hit']:play()
         end
 
         if ball:collides(player2) then
@@ -108,26 +116,34 @@ function love.update(dt)
             else
                 ball.dy = math.random(10, 150)
             end
+
+            sounds['paddle_hit']:play()
         end
 
         -- detect upper and lower boundaries
         if ball.y <= 0 then
             ball.y = 0
             ball.dy = -ball.dy
+
+            sounds['wall_hit']:play()
         end
 
         if ball.y >= VIRTUAL_HEIGHT - 4 then
             ball.y = VIRTUAL_HEIGHT - 4
             ball.dy = -ball.dy
+
+            sounds['wall_hit']:play()
         end
 
         -- update score state
         if ball.x <= 0 then
             game:updatePlayer2Score()
+            sounds['score']:play()
         end
 
         if ball.x >= VIRTUAL_WIDTH - 4 then
             game:updatePlayer1Score()
+            sounds['score']:play()
         end
 
         ball:update(dt)
