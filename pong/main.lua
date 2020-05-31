@@ -36,8 +36,6 @@ function love.load()
         vsync = true
     })
 
-    servingPlayer = math.random(2)
-
     -- initial Paddles
     player1 = Paddle(10, 30, 5, 20)
     player2 = Paddle(VIRTUAL_WIDTH - 15, VIRTUAL_HEIGHT - 50, 5, 20)
@@ -55,6 +53,12 @@ function love.keypressed(key)
         love.event.quit()
     elseif key == 'enter' or key == 'return' then
         if game.state == GAME_STATE.START then
+            game.state = GAME_STATE.SERVE
+        elseif game.state == GAME_STATE.SERVE then
+            game.state = GAME_STATE.PLAY
+        elseif game.state == GAME_STATE.PLAY then
+            game.state = GAME_STATE.PAUSE
+        elseif game.state == GAME_STATE.PAUSE then
             game.state = GAME_STATE.PLAY
         else
             game:reset()
@@ -84,7 +88,15 @@ function love.update(dt)
     end
 
     -- ball movement
-    if game.state == GAME_STATE.PLAY then
+    if game.state == GAME_STATE.SERVE then
+        ball:reset()
+
+        if game.servingPlayer == 1 then
+            ball.dx = 100
+        elseif game.servingPlayer == 2 then
+            ball.dx = -100
+        end
+    elseif game.state == GAME_STATE.PLAY then
         if ball:collides(player1) then
             ball.dx = -ball.dx * 1.03
             ball.x = player1.x + 5
@@ -121,19 +133,22 @@ function love.update(dt)
         -- update score state
         if ball.x <= 0 then
             game:updatePlayer2Score()
-            ball:reset()
+            game.servingPlayer = 1
+            game:update(GAME_STATE.SERVE)
         end
 
         if ball.x >= VIRTUAL_WIDTH - 4 then
             game:updatePlayer1Score()
-            ball:reset()
+            game.servingPlayer = 2
+            game:update(GAME_STATE.SERVE)
         end
 
         ball:update(dt)
 
         if game:checkWinner() then
-            game.state = GAME_STATE.END
-            ball:reset()
+            game:setWinner()
+            game:update(GAME_STATE.END)
+            -- ball:reset()
         end
     end
 
