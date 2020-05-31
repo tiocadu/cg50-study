@@ -12,6 +12,8 @@ require 'Paddle'
 require 'Ball'
 require 'Game'
 
+DEBUG = false
+
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
 
@@ -176,7 +178,9 @@ function love.draw()
     ball:render()
 
     -- debug
-    displayFPS()
+    if DEBUG == true then
+        displayFPS()
+    end
 
     push:apply('end')
 end
