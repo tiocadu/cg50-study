@@ -28,7 +28,6 @@ local ground = love.graphics.newImage('images/ground.png')
 local groundScroll = 0
 local GROUND_SCROLL_SPEED = 60
 
-
 function love.load()
     love.window.setTitle('Hello Flappy Bird!')
 
@@ -46,14 +45,16 @@ function love.load()
     })
 
     bird = Bird()
+
+    love.keyboard.keysPressed = {}
 end
 
 -- input controll
 function love.keypressed(key)
+    love.keyboard.keysPressed[key] = true
+
     if key == 'escape' then
         love.event.quit()
-    elseif key == 'enter' or key == 'return' then
-        -- game:updateState()
     end
 end
 
@@ -62,6 +63,15 @@ function love.update(dt)
     groundScroll = (groundScroll + GROUND_SCROLL_SPEED * dt) % VIRTUAL_WIDTH
 
     bird:update(dt)
+
+    love.keyboard.keysPressed = {}
+end
+
+function love.keyboard.wasPressed(key)
+    if love.keyboard.keysPressed[key] then
+        return true
+    end
+    return false
 end
 
 function love.draw()
