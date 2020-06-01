@@ -8,6 +8,8 @@ push = require 'libs/push'
 -- https://github.com/vrld/hump/blob/master/class.lua
 Class = require 'libs/class'
 
+require 'Bird'
+
 DEBUG = true
 
 WINDOW_WIDTH = 1280
@@ -42,6 +44,8 @@ function love.load()
         resizable = true,
         vsync = true
     })
+
+    bird = Bird()
 end
 
 -- input controll
@@ -63,6 +67,8 @@ function love.draw()
 
     love.graphics.draw(background, -backgroundScroll, 0)
     love.graphics.draw(ground, -groundScroll, VIRTUAL_HEIGHT - 16)
+
+    bird:render()
 
     -- debug
     if DEBUG == true then
