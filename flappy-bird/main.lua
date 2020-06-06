@@ -9,6 +9,7 @@ push = require 'libs/push'
 Class = require 'libs/class'
 
 require 'Bird'
+require 'Pipe'
 
 DEBUG = true
 
@@ -34,6 +35,9 @@ function love.load()
     -- setting filter to not blur images when scaling window
     love.graphics.setDefaultFilter('nearest', 'nearest')
 
+    -- setting RNG for the game
+    math.randomseed(os.time())
+
     smallFont = love.graphics.newFont('assets/font.ttf', 8)
 
     love.graphics.setFont(smallFont)
@@ -45,6 +49,7 @@ function love.load()
     })
 
     bird = Bird()
+    pipe = Pipe()
 
     love.keyboard.keysPressed = {}
 end
@@ -63,6 +68,7 @@ function love.update(dt)
     groundScroll = (groundScroll + GROUND_SCROLL_SPEED * dt) % VIRTUAL_WIDTH
 
     bird:update(dt)
+    pipe:update(dt)
 
     love.keyboard.keysPressed = {}
 end
@@ -78,6 +84,9 @@ function love.draw()
     push:start()
 
     love.graphics.draw(background, -backgroundScroll, 0)
+
+    pipe:render()
+
     love.graphics.draw(ground, -groundScroll, VIRTUAL_HEIGHT - 16)
 
     bird:render()
