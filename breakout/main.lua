@@ -73,12 +73,6 @@ function love.load()
 
   -- input controll
   function love.keypressed(key)
-    if key == 'escape' then
-      love.event.quit()
-    elseif key == 'enter' or key == 'return' then
-      -- game:updateState()
-    end
-
     love.keyboard.keysPressed[key] = true
   end
 
