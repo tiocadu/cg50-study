@@ -3,13 +3,6 @@
 
 require 'src/Dependencies'
 
--- instead of using a package manager, i'm going with local dependences
--- https://github.com/Ulydev/push/blob/master/push.lua
-push = require 'libs/push'
-
--- https://github.com/vrld/hump/blob/master/class.lua
-Class = require 'libs/class'
-
 DEBUG = true
 
 function love.load()
