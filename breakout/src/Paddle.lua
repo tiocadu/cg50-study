@@ -1,4 +1,4 @@
-StartState = Class{}
+Paddle = Class{}
 
 function Paddle:init()
   self.x = VIRTUAL_WIDTH / 2 - 32
@@ -27,9 +27,9 @@ function Paddle:update(dt)
   end
 
   if self.dx < 0 then
-    self.x = Math.max(0, self.x + self.dx * dt)
+    self.x = math.max(0, self.x + self.dx * dt)
   elseif self.dx > 0 then
-    self.x = Math.min(self.x + self.dx * dt, VIRTUAL_WIDTH - self.width)
+    self.x = math.min(self.x + self.dx * dt, VIRTUAL_WIDTH - self.width)
   end
 end
 

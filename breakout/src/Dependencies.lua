@@ -11,6 +11,11 @@ Class = require 'libs/class'
 -- import our sprites and quads
 require 'src/Util'
 
+-- objects
+require 'src/Paddle'
+
+-- states
 require 'src/StateMachine'
 require 'src/states/BaseState'
 require 'src/states/StartState'
+require 'src/states/PlayState'
