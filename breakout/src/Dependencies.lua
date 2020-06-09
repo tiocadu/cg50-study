@@ -8,6 +8,9 @@ push = require 'libs/push'
 -- https://github.com/vrld/hump/blob/master/class.lua
 Class = require 'libs/class'
 
+-- import our sprites and quads
+require 'src/Util'
+
 require 'src/StateMachine'
 require 'src/states/BaseState'
 require 'src/states/StartState'
