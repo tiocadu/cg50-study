@@ -90,6 +90,19 @@ end
 function love.draw()
     push:start()
 
+    local backgroundWidth = gTextures['background']:getWidth()
+    local backgroundHeight = gTextures['background']:getHeight()
+
+    love.graphics.draw(gTextures['background'],
+    -- coordinates (0, 0)
+    0, 0,
+    -- no rotation
+    0,
+    -- scale factors so it fills the screen
+    VIRTUAL_WIDTH / (backgroundWidth - 1), VIRTUAL_HEIGHT / (backgroundHeight - 1))
+
+    gStateMachine:render()
+
     -- debug
     if DEBUG == true then
         displayFPS()
