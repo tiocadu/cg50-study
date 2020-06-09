@@ -14,6 +14,8 @@ require 'src/Util'
 -- objects
 require 'src/Paddle'
 require 'src/Ball'
+require 'src/Brick'
+
 
 -- states
 require 'src/StateMachine'
