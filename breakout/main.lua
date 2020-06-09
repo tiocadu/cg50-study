@@ -52,7 +52,7 @@ function love.load()
       ['select'] = love.audio.newSource('sounds/select.wav', 'static'),
       ['victory'] = love.audio.newSource('sounds/victory.wav', 'static'),
       ['wall-hit'] = love.audio.newSource('sounds/wall_hit.wav', 'static'),
-      ['music'] = love.audio.newSource('sounds/music.wav', 'stream'),
+      ['music'] = love.audio.newSource('sounds/music.wav', 'static'),
     }
 
     -- game states
