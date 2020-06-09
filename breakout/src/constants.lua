@@ -9,4 +9,4 @@ VIRTUAL_WIDTH = 432
 VIRTUAL_HEIGHT = 243
 
 -- initial paddle speed
-PADDLE_SPEED = 16
+PADDLE_SPEED = 128
