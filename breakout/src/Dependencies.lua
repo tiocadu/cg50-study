@@ -13,6 +13,7 @@ require 'src/Util'
 
 -- objects
 require 'src/Paddle'
+require 'src/Ball'
 
 -- states
 require 'src/StateMachine'
