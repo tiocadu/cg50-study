@@ -14,11 +14,11 @@ function StateMachine:init(states)
   self._current = self._empty
 end
 
-function StateMachine:change(newState)
+function StateMachine:change(newState, enterParams)
   if self._states[newState] then
     self._current:exit()
     local nextState = self._states[newState]()
-    nextState:enter()
+    nextState:enter(enterParams)
     self._current = nextState
   end
 end
