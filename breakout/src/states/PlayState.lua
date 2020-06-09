@@ -4,6 +4,8 @@ function PlayState:init()
   self.paddle = Paddle()
   self.ball = Ball(math.random(7))
 
+  self.bricks = LevelMaker:createMap()
+
   self.paused = false
 end
 
@@ -28,9 +30,20 @@ function PlayState:update(dt)
     self.ball.dy = - self.ball.dy
     gSounds['paddle-hit']:play()
   end
+
+  for k, brick in pairs(self.bricks) do
+    if brick.inPlay and self.ball:collides(brick) then
+      brick:hit()
+    end
+  end
+
 end
 
 function PlayState:render()
+  for k, brick in pairs(self.bricks) do
+      brick:render()
+  end
+
   self.paddle:render()
   self.ball:render()
 

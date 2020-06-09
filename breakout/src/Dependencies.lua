@@ -16,6 +16,8 @@ require 'src/Paddle'
 require 'src/Ball'
 require 'src/Brick'
 
+-- level generator
+require 'src/LevelMaker'
 
 -- states
 require 'src/StateMachine'
