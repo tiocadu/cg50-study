@@ -73,6 +73,9 @@ function love.load()
       ['serve'] = function() return ServeState() end,
     }
     gStateMachine:change('start')
+    gSounds['music']:setVolume(0.3)
+    gSounds['music']:setLooping(true)
+    gSounds['music']:play()
 
     -- auxiliary table to pass pressed keys outside love.keypressed method
     love.keyboard.keysPressed = {}
