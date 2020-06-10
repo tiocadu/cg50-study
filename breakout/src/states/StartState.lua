@@ -11,8 +11,13 @@ function StartState:update(dt)
 
   if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
     if highlighted == 0 then
-      gStateMachine:change('play')
       gSounds['confirm']:play()
+      gStateMachine:change('serve', {
+        paddle = Paddle(1),
+        bricks = LevelMaker:createMap(),
+        hearts = 3,
+        score = 0
+      })
     end
   end
 

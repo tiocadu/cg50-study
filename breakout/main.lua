@@ -70,7 +70,7 @@ function love.load()
     -- 6. 'game-over' - display score and allow restart
     gStateMachine = StateMachine {
       ['start'] = function() return StartState() end,
-      ['play'] = function() return PlayState() end
+      ['serve'] = function() return ServeState() end,
     }
     gStateMachine:change('start')
 
