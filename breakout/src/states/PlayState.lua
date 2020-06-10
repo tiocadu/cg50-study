@@ -18,6 +18,8 @@ function PlayState:enter(enterParams)
 
   self.score = enterParams.score
   self.hearts = enterParams.hearts
+
+  self.ball = enterParams.ball
 end
 
 function PlayState:update(dt)

@@ -5,6 +5,7 @@ function ServeState:enter(enterParams)
   self.paddle = enterParams.paddle
   self.hearts = enterParams.hearts
   self.score = enterParams.score
+  self.ball = Ball(math.random(7))
 end
 
 function ServeState:update(dt)
@@ -14,7 +15,8 @@ function ServeState:update(dt)
         paddle = self.paddle,
         bricks = self.bricks,
         hearts = self.hearts,
-        score = self.score
+        score = self.score,
+        ball = self.ball
       })
   end
 end
@@ -25,6 +27,7 @@ function ServeState:render()
   end
 
   self.paddle:render()
+  self.ball:render()
   renderHearts(self.hearts)
   renderScore(self.score)
 
