@@ -10,8 +10,8 @@ function LevelMaker:createMap(level)
   local shouldSkipBlocks = math.random(2) == 1 and true or false
 
   for y = 1, numRows do
-    local colColor = math.random(1, 5)
-    local tierColor = math.random(1, 4)
+    local colColor = math.min(math.random(1, 5), level)
+    local tierColor = math.min(math.random(1, 4), math.floor(level/5) % 5 + 1)
 
     if  not (shouldSkipRows and y % 2 == 0) then
       for x = 1, numCols do
