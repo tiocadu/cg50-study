@@ -10,6 +10,8 @@ function ServeState:enter(enterParams)
 end
 
 function ServeState:update(dt)
+  self.paddle:reset()
+
   if love.keyboard.wasPressed('space') then
       gSounds['paddle-hit']:play()
       gStateMachine:change('play', {

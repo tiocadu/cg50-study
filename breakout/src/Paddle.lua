@@ -17,6 +17,13 @@ function Paddle:init(skin)
   self.size = 2
 end
 
+function Paddle:reset()
+  self.x = VIRTUAL_WIDTH / 2 - 32
+  self.y = VIRTUAL_HEIGHT - 32
+
+  self.dx = 0
+end
+
 function Paddle:update(dt)
   if love.keyboard.isDown('left') then
     self.dx = - PADDLE_SPEED
