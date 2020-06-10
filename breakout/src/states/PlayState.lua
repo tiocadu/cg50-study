@@ -57,6 +57,8 @@ function PlayState:update(dt)
   end
 
   for k, brick in pairs(self.bricks) do
+    brick:update(dt)
+
     if brick.inPlay and self.ball:collides(brick) then
       brick:hit()
       self.score = self.score + (brick.tier * 200 + brick.color * 25)
