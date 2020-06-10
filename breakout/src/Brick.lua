@@ -19,7 +19,20 @@ function Brick:hit()
   gSounds['brick-hit-2']:stop()
   gSounds['brick-hit-2']:play()
 
-  self.inPlay = false
+  if self.tier > 1 then
+    if self.color > 1 then
+      self.color = self.color - 1
+    else
+      self.tier = self.tier - 1
+      self.color = 5
+    end
+  else
+    if self.color > 1 then
+      self.color = self.color - 1
+    else
+      self.inPlay = false
+    end
+  end
 end
 
 function Brick:render()
