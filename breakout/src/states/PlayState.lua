@@ -4,10 +4,12 @@ function PlayState:init()
   self.paddle = Paddle()
   self.ball = Ball(math.random(7))
 
-  self.bricks = LevelMaker:createMap()
+  self.bricks = {}
 
   self.score = 0
   self.hearts = 0
+
+  self.level = 1
 
   self.paused = false
 end
@@ -18,6 +20,8 @@ function PlayState:enter(enterParams)
 
   self.score = enterParams.score
   self.hearts = enterParams.hearts
+
+  self.level = enterParams.level
 
   self.ball = enterParams.ball
 end
@@ -101,6 +105,26 @@ function PlayState:update(dt)
     end
   end
 
+  if checkWinCondition(self.bricks) then
+    gSounds['victory']:play()
+    self.level = self.level + 1
+    gStateMachine:change('serve', {
+      paddle = self.paddle,
+      bricks = LevelMaker:createMap(self.level),
+      hearts = self.hearts,
+      score = self.score,
+      level = self.level
+    })
+  end
+end
+
+function checkWinCondition(bricks)
+  for k, brick in pairs(bricks) do
+    if brick.inPlay then
+      return false
+    end
+  end
+  return true
 end
 
 function PlayState:render()
