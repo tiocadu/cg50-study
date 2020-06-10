@@ -131,14 +131,14 @@ function renderHearts(hearts)
             love.graphics.draw(
                 gTextures['hearts'],
                 gFrames['hearts'][1],
-                VIRTUAL_WIDTH - 85 + (i -1) * 10 + 1,
+                VIRTUAL_WIDTH - 95 + (i -1) * 10 + 1,
                 4
             )
         else
             love.graphics.draw(
                 gTextures['hearts'],
                 gFrames['hearts'][2],
-                VIRTUAL_WIDTH - 85 + (i -1) * 10 + 1,
+                VIRTUAL_WIDTH - 95 + (i -1) * 10 + 1,
                 4
             )
         end
@@ -147,7 +147,7 @@ end
 
 function renderScore(score)
     love.graphics.setFont(gFonts['small'])
-    love.graphics.print('Score: ' .. tostring(score), VIRTUAL_WIDTH - 50, 5)
+    love.graphics.print('Score: ' .. tostring(score), VIRTUAL_WIDTH - 60, 5)
 end
 
 function displayFPS()

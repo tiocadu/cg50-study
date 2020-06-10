@@ -16,6 +16,7 @@ function Brick:init(x, y, color, tier)
 end
 
 function Brick:hit()
+  gSounds['brick-hit-2']:stop()
   gSounds['brick-hit-2']:play()
 
   self.inPlay = false
