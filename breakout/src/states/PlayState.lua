@@ -6,7 +6,18 @@ function PlayState:init()
 
   self.bricks = LevelMaker:createMap()
 
+  self.score = 0
+  self.hearts = 0
+
   self.paused = false
+end
+
+function PlayState:enter(enterParams)
+  self.paddle = enterParams.paddle
+  self.bricks = enterParams.bricks
+
+  self.score = enterParams.score
+  self.hearts = enterParams.hearts
 end
 
 function PlayState:update(dt)
@@ -14,12 +25,14 @@ function PlayState:update(dt)
     if love.keyboard.wasPressed('space') then
       self.paused = false
       gSounds['pause']:play()
+      gSounds['music']:play()
     else
       return
     end
   elseif love.keyboard.wasPressed('space') then
     self.paused = true
     gSounds['pause']:play()
+    gSounds['music']:pause()
     return
   end
 
@@ -44,6 +57,7 @@ function PlayState:update(dt)
   for k, brick in pairs(self.bricks) do
     if brick.inPlay and self.ball:collides(brick) then
       brick:hit()
+      self.score = self.score + 10
 
       -- ball position after collision with bricks
       if self.ball.x + 2 < brick.x and self.ball.dx > 0 then
@@ -64,6 +78,25 @@ function PlayState:update(dt)
     end
   end
 
+  if self.ball.y >= VIRTUAL_HEIGHT - self.ball.height then
+    gSounds['hurt']:play()
+    self.hearts = self.hearts - 1
+
+    if self.hearts == 0 then
+      gSounds['score']:play()
+      gStateMachine:change('game-over', {
+        score = self.score
+      })
+    else
+      gStateMachine:change('serve', {
+        paddle = self.paddle,
+        bricks = self.bricks,
+        hearts = self.hearts,
+        score = self.score
+      })
+    end
+  end
+
 end
 
 function PlayState:render()
@@ -73,6 +106,9 @@ function PlayState:render()
 
   self.paddle:render()
   self.ball:render()
+
+  renderHearts(self.hearts)
+  renderScore(self.score)
 
   if self.paused then
     love.graphics.setFont(gFonts['large'])

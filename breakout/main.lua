@@ -35,7 +35,8 @@ function love.load()
     gFrames = {
       ['paddles'] = GenerateQuadsPaddles(gTextures['main']),
       ['balls'] = GenerateQuadsBalls(gTextures['main']),
-      ['bricks'] = GenerateQuadsBricks(gTextures['main'])
+      ['bricks'] = GenerateQuadsBricks(gTextures['main']),
+      ['hearts'] = GenerateQuads(gTextures['hearts'], 10, 9)
     }
 
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
@@ -71,6 +72,8 @@ function love.load()
     gStateMachine = StateMachine {
       ['start'] = function() return StartState() end,
       ['serve'] = function() return ServeState() end,
+      ['play'] = function() return PlayState() end,
+      ['game-over'] = function() return GameOverState() end
     }
     gStateMachine:change('start')
     gSounds['music']:setVolume(0.3)
@@ -120,6 +123,31 @@ function love.keyboard.wasPressed(key)
     return true
   end
   return false
+end
+
+function renderHearts(hearts)
+    for i = 1, 3 do
+        if i <= hearts then
+            love.graphics.draw(
+                gTextures['hearts'],
+                gFrames['hearts'][1],
+                VIRTUAL_WIDTH - 85 + (i -1) * 10 + 1,
+                4
+            )
+        else
+            love.graphics.draw(
+                gTextures['hearts'],
+                gFrames['hearts'][2],
+                VIRTUAL_WIDTH - 85 + (i -1) * 10 + 1,
+                4
+            )
+        end
+    end
+end
+
+function renderScore(score)
+    love.graphics.setFont(gFonts['small'])
+    love.graphics.print('Score: ' .. tostring(score), VIRTUAL_WIDTH - 50, 5)
 end
 
 function displayFPS()
