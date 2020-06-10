@@ -100,7 +100,8 @@ function PlayState:update(dt)
         paddle = self.paddle,
         bricks = self.bricks,
         hearts = self.hearts,
-        score = self.score
+        score = self.score,
+        level = self.level
       })
     end
   end
