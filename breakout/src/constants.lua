@@ -1,5 +1,7 @@
 -- Global constant variables
 
+DEBUG = true
+
 -- setting window size
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
@@ -16,3 +18,6 @@ START_CONFIGS = {
   hearts = 3,
   score = 0
 }
+
+-- global high scores table (10 entries)
+gHighScoreTable = {}

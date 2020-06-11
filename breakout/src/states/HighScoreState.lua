@@ -1,5 +1,12 @@
 HighScoreState = Class{__includes = BaseState}
 
+function HighScoreState:enter(enterParams)
+    if enterParams and enterParams.newEntry then
+        UpdateHighScoreTable(enterParams.newEntry)
+        SaveHighScoreTable()
+    end
+end
+
 function HighScoreState:update(dt)
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
         gSounds['confirm']:play()

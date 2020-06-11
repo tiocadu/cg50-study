@@ -104,10 +104,74 @@ function CheckHighscore(score)
     return false
 end
 
+function UpdateHighScoreTable(entry)
+    local position = nil
+    for k, item in pairs(gHighScoreTable) do
+        if not position and entry.score >= item.score then
+            position = k
+        end
+    end
+    table.insert(gHighScoreTable, position, entry)
+    gHighScoreTable = table.slice(gHighScoreTable, 1, 10)
+end
+
 function ConcatNewEntryName(nameTable)
     local name = ''
     for i = 1, 3 do
         name = name .. nameTable[i]
     end
     return name
+end
+
+function GetHighScoresFromFile()
+    love.filesystem.setIdentity('breakout')
+    -- uncomment next line to remove saved file
+    -- love.filesystem.remove('breakout.lst')
+
+    if not love.filesystem.getInfo('breakout.lst') then
+        local scores = ''
+        for i = 1, 10 do
+            scores = scores .. 'AAA\n'
+            scores = scores .. tostring(0) .. '\n'
+        end
+
+        love.filesystem.write('breakout.lst', scores)
+    end
+
+    local name = true
+    local currentName = nil
+    local counter = 1
+
+    local scores = {}
+
+    for i = 1, 10 do
+      scores[i] = {
+        name = nil,
+        score = nil
+      }
+    end
+
+    for line in love.filesystem.lines('breakout.lst') do
+      if name then
+        scores[counter].name = string.sub(line, 1, 3)
+      else
+        scores[counter].score = tonumber(line)
+        counter = counter + 1
+      end
+
+      name = not name
+    end
+    return scores
+end
+
+function SaveHighScoreTable()
+    love.filesystem.setIdentity('breakout')
+
+    local scores = ''
+    for k, entry in pairs(gHighScoreTable) do
+        scores = scores .. entry.name .. '\n'
+        scores = scores .. tostring(entry.score) .. '\n'
+    end
+
+    love.filesystem.write('breakout.lst', scores)
 end

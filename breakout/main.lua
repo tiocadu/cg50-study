@@ -3,16 +3,6 @@
 
 require 'src/Dependencies'
 
-DEBUG = true
-
-gHighScoreTable = {}
-for i = 1, 10 do
-    table.insert(gHighScoreTable, {
-        name = "AAA",
-        score = 0
-    })
-end
-
 function love.load()
     love.window.setTitle('Hello Breakout!')
 
@@ -71,12 +61,6 @@ function love.load()
     }
 
     -- game states
-    -- 1. 'start' - press Enter to start the game
-    -- 2. 'paddle-select' - choose the color for the paddle
-    -- 3. 'serve' - waiting for a key press to serve the ball
-    -- 4. 'play' - the ball is moving and bouncing
-    -- 5. 'victory' - current level is over with a victory jingle
-    -- 6. 'game-over' - display score and allow restart
     gStateMachine = StateMachine {
         ['start'] = function() return StartState() end,
         ['serve'] = function() return ServeState() end,
@@ -89,6 +73,8 @@ function love.load()
     gSounds['music']:setVolume(0.3)
     gSounds['music']:setLooping(true)
     gSounds['music']:play()
+
+    gHighScoreTable = GetHighScoresFromFile()
 
     -- auxiliary table to pass pressed keys outside love.keypressed method
     love.keyboard.keysPressed = {}
