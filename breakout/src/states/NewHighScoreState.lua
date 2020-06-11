@@ -3,14 +3,14 @@ NewHighScoreState = Class{__includes = BaseState}
 local blinkTimer = 0
 
 function NewHighScoreState:init()
-  self.score = 0
-  self.selectedChar = 1
+    self.score = 0
+    self.selectedChar = 1
 
-  self.newEntryName = {'A', 'B', 'C'}
+    self.newEntryName = {'A', 'B', 'C'}
 end
 
 function NewHighScoreState:enter(enterParams)
-  self.score = enterParams.score
+    self.score = enterParams.score
 end
 
 function NewHighScoreState:update(dt)
@@ -39,14 +39,19 @@ function NewHighScoreState:update(dt)
         self:updateNameChar(self.selectedChar, string.char(newCharCode))
     end
 
-  if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
-      gSounds['confirm']:play()
-      gStateMachine:change('high-score')
-  end
+    if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
+        gSounds['confirm']:play()
+        gStateMachine:change('high-score', {
+            newEntry = {
+                name = ConcatNewEntryName(self.newEntryName),
+                score = self.score
+            }
+        })
+    end
 end
 
 function NewHighScoreState:updateNameChar(position, newChar)
-  self.newEntryName[position] = newChar
+    self.newEntryName[position] = newChar
 end
 
 function NewHighScoreState:render()
