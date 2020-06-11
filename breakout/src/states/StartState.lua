@@ -18,9 +18,9 @@ function StartState:update(dt)
       gStateMachine:change('serve', {
         paddle = Paddle(1),
         bricks = LevelMaker:createMap(1),
-        level = 1,
-        hearts = 3,
-        score = 0,
+        level = START_CONFIGS.level,
+        hearts = START_CONFIGS.hearts,
+        score = START_CONFIGS.score,
         ball = Ball(math.random(7))
       })
     elseif highlighted == 1 then

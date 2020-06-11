@@ -10,3 +10,9 @@ VIRTUAL_HEIGHT = 243
 
 -- initial paddle speed
 PADDLE_SPEED = 200
+
+START_CONFIGS = {
+  level = 1,
+  hearts = 3,
+  score = 0
+}

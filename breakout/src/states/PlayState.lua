@@ -90,7 +90,7 @@ function PlayState:update(dt)
     gSounds['hurt']:play()
     self.hearts = self.hearts - 1
 
-    if self.hearts == 0 then
+    if self.hearts <= 0 then
       gSounds['score']:play()
       gStateMachine:change('game-over', {
         score = self.score
