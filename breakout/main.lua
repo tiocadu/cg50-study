@@ -5,6 +5,14 @@ require 'src/Dependencies'
 
 DEBUG = true
 
+highscoreTable = {}
+for i = 1, 10 do
+  table.insert(highscoreTable, {
+    name = "AAA",
+    score = i * 999
+  })
+end
+
 function love.load()
     love.window.setTitle('Hello Breakout!')
 
@@ -73,7 +81,8 @@ function love.load()
       ['start'] = function() return StartState() end,
       ['serve'] = function() return ServeState() end,
       ['play'] = function() return PlayState() end,
-      ['game-over'] = function() return GameOverState() end
+      ['game-over'] = function() return GameOverState() end,
+      ['high-score'] = function() return HighScoreState() end
     }
     gStateMachine:change('start')
     gSounds['music']:setVolume(0.3)
