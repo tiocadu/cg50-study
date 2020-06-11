@@ -147,7 +147,8 @@ end
 
 function renderScore(score)
     love.graphics.setFont(gFonts['small'])
-    love.graphics.print('Score: ' .. tostring(score), VIRTUAL_WIDTH - 60, 5)
+    love.graphics.print('Score:', VIRTUAL_WIDTH - 60, 5)
+    love.graphics.printf(tostring(score), -10, 5, VIRTUAL_WIDTH, 'right')
 end
 
 function displayFPS()
