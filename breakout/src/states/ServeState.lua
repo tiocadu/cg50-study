@@ -6,7 +6,9 @@ function ServeState:enter(enterParams)
   self.hearts = enterParams.hearts
   self.level = enterParams.level
   self.score = enterParams.score
-  self.ball = Ball(math.random(7))
+  self.ball = enterParams.ball
+
+  self.ball:reset()
 end
 
 function ServeState:update(dt)

@@ -20,7 +20,8 @@ function StartState:update(dt)
         bricks = LevelMaker:createMap(1),
         level = 1,
         hearts = 3,
-        score = 0
+        score = 0,
+        ball = Ball(math.random(7))
       })
     elseif highlighted == 1 then
       gSounds['confirm']:play()

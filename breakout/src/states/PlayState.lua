@@ -101,7 +101,8 @@ function PlayState:update(dt)
         bricks = self.bricks,
         hearts = self.hearts,
         score = self.score,
-        level = self.level
+        level = self.level,
+        ball = self.ball
       })
     end
   end
@@ -114,7 +115,8 @@ function PlayState:update(dt)
       bricks = LevelMaker:createMap(self.level),
       hearts = self.hearts,
       score = self.score,
-      level = self.level
+      level = self.level,
+      ball = self.ball
     })
   end
 end
