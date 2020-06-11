@@ -5,11 +5,11 @@ require 'src/Dependencies'
 
 DEBUG = true
 
-highscoreTable = {}
+gHighScoreTable = {}
 for i = 1, 10 do
-  table.insert(highscoreTable, {
+  table.insert(gHighScoreTable, {
     name = "AAA",
-    score = i * 999
+    score = 0
   })
 end
 

@@ -15,8 +15,8 @@ function HighScoreState:render()
   love.graphics.setFont(gFonts['medium'])
   for i =1, 10 do
     love.graphics.printf(tostring(i) .. '.', 100, 50 + i * 15, VIRTUAL_WIDTH, 'left')
-    love.graphics.printf(highscoreTable[i]['name'], 0, 50 + i * 15, VIRTUAL_WIDTH, 'center')
-    love.graphics.printf(tostring(highscoreTable[i]['score']), -100, 50 + i * 15, VIRTUAL_WIDTH, 'right')
+    love.graphics.printf(gHighScoreTable[i]['name'], 0, 50 + i * 15, VIRTUAL_WIDTH, 'center')
+    love.graphics.printf(tostring(gHighScoreTable[i]['score']), -100, 50 + i * 15, VIRTUAL_WIDTH, 'right')
   end
 
   love.graphics.setFont(gFonts['small'])
