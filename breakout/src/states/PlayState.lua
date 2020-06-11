@@ -92,9 +92,16 @@ function PlayState:update(dt)
 
     if self.hearts <= 0 then
       gSounds['score']:play()
-      gStateMachine:change('game-over', {
-        score = self.score
-      })
+      if CheckHighscore(self.score) then
+        gSounds['victory']:play()
+        gStateMachine:change('new-high-score', {
+          score = self.score
+        })
+      else
+        gStateMachine:change('game-over', {
+          score = self.score
+        })
+      end
     else
       gStateMachine:change('serve', {
         paddle = self.paddle,

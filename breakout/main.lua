@@ -82,6 +82,7 @@ function love.load()
       ['serve'] = function() return ServeState() end,
       ['play'] = function() return PlayState() end,
       ['game-over'] = function() return GameOverState() end,
+      ['new-high-score'] = function() return NewHighScoreState() end,
       ['high-score'] = function() return HighScoreState() end
     }
     gStateMachine:change('start')

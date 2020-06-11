@@ -94,3 +94,21 @@ end
 function GenerateQuadsBricks(atlas)
   return table.slice(GenerateQuads(atlas, 32, 16), 1, 20)
 end
+
+function CheckHighscore(score)
+    for k, entry in pairs(gHighScoreTable) do
+        if score >= entry.score then
+            return true
+        end
+    end
+    return false
+end
+
+function ConcatNewEntryName(nameTable)
+    local name = ''
+    for i = 1, 3 do
+        name = name .. nameTable[i]
+    end
+    return name
+end
+
