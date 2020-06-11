@@ -14,9 +14,9 @@ VIRTUAL_HEIGHT = 243
 PADDLE_SPEED = 200
 
 START_CONFIGS = {
-  level = 1,
-  hearts = 3,
-  score = 0
+    level = 1,
+    hearts = 3,
+    score = 0
 }
 
 -- global high scores table (10 entries)
