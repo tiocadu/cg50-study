@@ -28,6 +28,7 @@ function StartState:update(dt)
       gStateMachine:change('high-score')
     elseif highlighted == 2 then
       gSounds['confirm']:play()
+      love.timer.sleep(0.5)
       love.event.quit()
     end
   end
