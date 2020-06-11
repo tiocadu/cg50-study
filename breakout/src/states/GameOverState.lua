@@ -1,5 +1,7 @@
 GameOverState = Class{__includes = BaseState}
 
+local blinkTimer = 0
+
 function GameOverState:init()
   self.score = 0
   self.newHighScore = false
@@ -19,6 +21,11 @@ end
 
 function GameOverState:update(dt)
   if self.newHighScore then
+      blinkTimer = blinkTimer + dt
+      if blinkTimer > 1.2 then
+        blinkTimer = 0
+      end
+
       if love.keyboard.wasPressed('left') then
           gSounds['select']:play()
           self.selectedChar = self.selectedChar == 1 and 3 or self.selectedChar - 1
@@ -68,7 +75,9 @@ function GameOverState:render()
     love.graphics.setFont(gFonts['medium'])
     love.graphics.printf('Enter your name: ', 0, VIRTUAL_HEIGHT/2 + 20, VIRTUAL_WIDTH, 'center')
     love.graphics.printf('< ' .. concatNewEntryName(self.newEntryName) .. ' >', 0, VIRTUAL_HEIGHT/2 + 40, VIRTUAL_WIDTH, 'center')
-    printSelector(self.selectedChar)
+    if blinkTimer < 0.75 then
+        printSelector(self.selectedChar)
+    end
 
     love.graphics.setFont(gFonts['small'])
     love.graphics.printf('press Enter to register your score', 0, VIRTUAL_HEIGHT - 30, VIRTUAL_WIDTH, 'center')
