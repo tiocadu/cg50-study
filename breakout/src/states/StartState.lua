@@ -6,23 +6,16 @@ function StartState:update(dt)
     -- toggle highlighted option if we press vertical arrow keys
     if love.keyboard.wasPressed('up') then
         highlighted = (highlighted - 1) % 3
-        gSounds['paddle-hit']:play()
+        gSounds['select']:play()
     elseif  love.keyboard.wasPressed('down') then
         highlighted = (highlighted + 1) % 3
-        gSounds['paddle-hit']:play()
+        gSounds['select']:play()
     end
 
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
         if highlighted == 0 then
             gSounds['confirm']:play()
-            gStateMachine:change('serve', {
-                paddle = Paddle(1),
-                bricks = LevelMaker:createMap(1),
-                level = START_CONFIGS.level,
-                hearts = START_CONFIGS.hearts,
-                score = START_CONFIGS.score,
-                ball = Ball(math.random(7))
-            })
+            gStateMachine:change('paddle-selection')
         elseif highlighted == 1 then
             gSounds['confirm']:play()
             gStateMachine:change('high-score')
